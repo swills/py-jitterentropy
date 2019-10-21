@@ -4,5 +4,4 @@ jitterentropy.so: jitterentropy.c
 clean:
 	-rm -r jitterentropy.so build
 test: jitterentropy.so
-	-rm bytes
 	pytest -vvv
