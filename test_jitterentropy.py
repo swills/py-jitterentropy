@@ -3,5 +3,5 @@
 import jitterentropy
 
 print(jitterentropy.version())
-randbytes = jitterentropy.getrandbytes(512)
-print(''.join('{:x}'.format(x) for x in randbytes))
+randbytes = jitterentropy.getrandbytes(2048)
+print(''.join('{:02x}'.format(x) for x in randbytes))

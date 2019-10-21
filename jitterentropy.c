@@ -20,11 +20,12 @@ jitterentropy_getrandbytes(PyObject *self, PyObject *args)
     void* mrd;
     int br; 
     char *randbuf = NULL;
+    PyObject *res;
 
     if(!PyArg_ParseTuple(args, "h", &nbytes))
         return NULL;
     
-    randbuf = (char *)malloc(nbytes * sizeof(char));
+    randbuf = PyMem_RawMalloc(nbytes * sizeof(char));
     if (randbuf == NULL)
 	    return PyErr_NoMemory();
     jvh = jent_entropy_init();
@@ -35,7 +36,9 @@ jitterentropy_getrandbytes(PyObject *self, PyObject *args)
         return NULL;
     }
     jent_entropy_collector_free(mrd);
-    return PyBytes_FromStringAndSize(randbuf,nbytes);
+    res = PyBytes_FromStringAndSize(randbuf,nbytes);
+    free(randbuf);
+    return res;
 }
 
 static PyMethodDef JitterEntropyMethods[] = {
