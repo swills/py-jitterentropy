@@ -2,7 +2,8 @@
 #include <Python.h>
 #include <jitterentropy.h>
 
-static PyObject *JitterEntropyError;
+static PyObject *JitterEntropyReqError;
+static PyObject *JitterEntropySysError;
 
 static PyObject *
 jitterentropy_version(PyObject *self, PyObject *args)
@@ -26,7 +27,7 @@ jitterentropy_getrandbytes(PyObject *self, PyObject *args)
         return NULL;
 
     if(nbytes < 1) {
-        PyErr_SetString(JitterEntropyError, "invalid request");
+        PyErr_SetString(JitterEntropyReqError, "invalid request");
         return NULL;
     }
     
@@ -37,7 +38,7 @@ jitterentropy_getrandbytes(PyObject *self, PyObject *args)
     mrd = jent_entropy_collector_alloc(1, 0); 
     br = jent_read_entropy(mrd, randbuf, nbytes);
     if (br < 0) {
-        PyErr_SetString(JitterEntropyError, "jitterentropy Error");
+        PyErr_SetString(JitterEntropySysError, "jitterentropy Error");
         return NULL;
     }
     jent_entropy_collector_free(mrd);
@@ -63,5 +64,10 @@ static struct PyModuleDef jitterentropymodule = {
 PyMODINIT_FUNC
 PyInit_jitterentropy(void)
 {
-    return PyModule_Create(&jitterentropymodule);
+    PyObject* module = PyModule_Create(&jitterentropymodule);
+    JitterEntropyReqError = PyErr_NewException("JitterEntropy.ReqError", PyExc_ValueError, NULL);
+    PyModule_AddObject(module, "ReqError", JitterEntropyReqError);
+    JitterEntropySysError = PyErr_NewException("JitterEntropy.SysError", PyExc_ValueError, NULL);
+    PyModule_AddObject(module, "SysError", JitterEntropySysError);
+    return module;
 }
