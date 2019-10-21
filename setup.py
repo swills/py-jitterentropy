@@ -1,5 +1,5 @@
-from distutils.core import Extension
-from distutils.core import setup
+from setuptools import Extension
+from setuptools import setup
 
 jitterentropy = Extension(
     "jitterentropy",
@@ -10,19 +10,20 @@ jitterentropy = Extension(
 
 setup(
     name="jitterentropy",
-    version="0.1",
     description="Use libjitterentropy to get random bytes",
+    url="https://github.com/swills/py-jitterentropy",
+    version="0.1",
     author="Steve Wills",
     author_email="steve@mouf.net",
-    url="https://github.com/swills/py-jitterentropy",
-    long_description="""
-Wrapper for libjitterentropy
-
-See:
-
-https://github.com/smuellerDD/jitterentropy-library
-http://www.chronox.de/jent.html
-
-""",
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Developers",
+        "Topic :: Utilities",
+        "Operating System :: POSIX :: BSD :: FreeBSD",
+        "License :: OSI Approved :: BSD License",
+        "Programming Language :: Python :: 3 :: Only",
+    ],
+    py_modules=["jitterentropy"],
     ext_modules=[jitterentropy],
+    install_requires=[],
 )
