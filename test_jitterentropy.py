@@ -3,6 +3,7 @@
 import jitterentropy
 
 print(jitterentropy.version())
+#randbytes = jitterentropy.getrandbytes(-10)
 randbytes = jitterentropy.getrandbytes(16)
 print(''.join('{:02x}'.format(x) for x in randbytes))
 newFile = open("bytes", "wb")

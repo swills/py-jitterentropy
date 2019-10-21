@@ -42,7 +42,7 @@ jitterentropy_getrandbytes(PyObject *self, PyObject *args)
     }
     jent_entropy_collector_free(mrd);
     res = PyBytes_FromStringAndSize(randbuf,nbytes);
-    free(randbuf);
+    PyMem_RawFree(randbuf);
     return res;
 }
 
