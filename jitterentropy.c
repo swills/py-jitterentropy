@@ -22,8 +22,13 @@ jitterentropy_getrandbytes(PyObject *self, PyObject *args)
     char *randbuf = NULL;
     PyObject *res;
 
-    if(!PyArg_ParseTuple(args, "h", &nbytes))
+    if(!PyArg_ParseTuple(args, "i", &nbytes))
         return NULL;
+
+    if(nbytes < 1) {
+        PyErr_SetString(JitterEntropyError, "invalid request");
+        return NULL;
+    }
     
     randbuf = PyMem_RawMalloc(nbytes * sizeof(char));
     if (randbuf == NULL)
@@ -32,7 +37,7 @@ jitterentropy_getrandbytes(PyObject *self, PyObject *args)
     mrd = jent_entropy_collector_alloc(1, 0); 
     br = jent_read_entropy(mrd, randbuf, nbytes);
     if (br < 0) {
-        PyErr_SetString(JitterEntropyError, "JitterEntropy Error");
+        PyErr_SetString(JitterEntropyError, "jitterentropy Error");
         return NULL;
     }
     jent_entropy_collector_free(mrd);
