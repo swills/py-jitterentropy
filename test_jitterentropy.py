@@ -35,4 +35,4 @@ def test_randomness(tmpdir):
     line1 = resulta[0]
     tokens = line1.split()
     entropyval = float(tokens[2])
-    assert entropyval >= 0.99999
+    assert entropyval >= 0.999
