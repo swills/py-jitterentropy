@@ -23,7 +23,6 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python :: 3 :: Only",
     ],
-    py_modules=["jitterentropy"],
     ext_modules=[jitterentropy],
     install_requires=[],
 )
