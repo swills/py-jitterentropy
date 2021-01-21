@@ -7,7 +7,7 @@ import pytest
 
 def test_version():
     ver = jitterentropy.version()
-    assert ver == 2020000
+    assert ver == 3000100
 
 
 def test_negative_bytes():
